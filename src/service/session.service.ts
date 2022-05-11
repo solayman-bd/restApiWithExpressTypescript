@@ -11,9 +11,9 @@ export async function createSession(userId: string, userAgent: string) {
   return session.toJSON();
 }
 
-export async function findSessions(query: FilterQuery<SessionDocument>) {
+export const findSessions = async (query: FilterQuery<SessionDocument>) => {
   return SessionModel.find(query).lean();
-}
+};
 
 export async function updateSession(
   query: FilterQuery<SessionDocument>,
@@ -27,7 +27,7 @@ export async function reIssueAccessToken({
 }: {
   refreshToken: string;
 }) {
-  const { decoded } = verifyJwt(refreshToken, "refreshTokenPublicKey");
+  const { decoded } = verifyJwt(refreshToken, "refreshTokenPrivateKey");
 
   if (!decoded || !get(decoded, "session")) return false;
 

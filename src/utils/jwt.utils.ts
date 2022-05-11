@@ -18,14 +18,13 @@ export const signJwt = (
 
   const signedKey = jwt.sign(object, signingKey, {
     ...(options && options),
-    algorithm: "RS256",
   });
   return signedKey;
 };
 
 export const verifyJwt = (
   token: string,
-  keyName: "accessTokenPublicKey" | "refreshTokenPublicKey"
+  keyName: "accessTokenPrivateKey" | "refreshTokenPrivateKey"
 ) => {
   const publicKey = Buffer.from(config.get<string>(keyName), "base64").toString(
     "ascii"
